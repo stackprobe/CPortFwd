@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Permissions;
+using System.Threading;
 
 namespace WCPortFwd
 {
@@ -37,13 +38,13 @@ namespace WCPortFwd
 		private void 停止ProcWin_Load(object sender, EventArgs e)
 		{
 			this.Icon = Gnd.I.MainWin.Icon;
-			
+
 			foreach (ForwardInfo fi in Gnd.I.ForwardInfoList)
 				if (fi.Proc != null)
 					fi.停止してね();
 
 			this.TimerOn = true;
-			this.何もするな_Time = 3; // 必要か？
+			this.何もするな_Time = 5; // 必要か？
 		}
 
 		private bool TimerOn;
@@ -76,6 +77,37 @@ namespace WCPortFwd
 		private void 停止ProcWin_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			this.TimerOn = false;
+		}
+
+		public static void Perform(bool noDlg = false)
+		{
+			if (noDlg)
+			{
+				foreach (ForwardInfo fi in Gnd.I.ForwardInfoList)
+					if (fi.Proc != null)
+						fi.停止してね();
+
+				foreach (ForwardInfo fi in Gnd.I.ForwardInfoList)
+				{
+					for (; ; )
+					{
+						fi.停止();
+
+						if (fi.Proc == null)
+							break;
+
+						fi.停止してね();
+						Thread.Sleep(100);
+					}
+				}
+			}
+			else
+			{
+				using (Form f = new 停止ProcWin())
+				{
+					f.ShowDialog();
+				}
+			}
 		}
 	}
 }

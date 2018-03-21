@@ -201,6 +201,11 @@ namespace WCPortFwd
 
 		private void Btn終了_Click(object sender, EventArgs e)
 		{
+			this.TimerOff.Increment();
+			this.TaskTrayIcon.Visible = false;
+
+			停止ProcWin.Perform(); // Program.cs にもあるので、ここを通らなくても良い。
+
 			this.Close();
 		}
 

@@ -32,10 +32,10 @@ namespace WCPortFwd
 
 				// シャットダウンした場合 MainWin の FormClosed は実行されるが、ここへは到達しないようだ...
 
-				using (Form f = new 停止ProcWin())
-				{
-					f.ShowDialog();
-				}
+				// ここではフォームを開けない...
+
+				停止ProcWin.Perform(true);
+
 				GlobalProcMtx.Release();
 				mtx.ReleaseMutex();
 			}
