@@ -114,27 +114,7 @@ void unaddCwd(void)
 	setCwd_x(GetCwdStack()->UnaddElement());
 }
 
-// sync > @ My_mkdir
-
-static int My_mkdir(char *dir) // ret: ? Ž¸”s
-{
-#if 1
-	if(CreateDirectory(dir, NULL) == 0) // ? Ž¸”s
-	{
-		return 1;
-	}
-	return 0;
-#else
-	if(_mkdir(dir)) // ? Ž¸”s
-	{
-		return 1;
-	}
-	return 0;
-#endif
-}
-
-// < sync
-
+#if 0 // not using
 void createFile(char *file)
 {
 	errorCase(m_isEmpty(file));
@@ -145,6 +125,7 @@ void createDir(char *dir)
 	errorCase(m_isEmpty(dir));
 	errorCase(My_mkdir(dir)); // ? Ž¸”s
 }
+#endif
 
 void removeFile(char *file)
 {

@@ -182,6 +182,7 @@ char *makeTempPath(char *suffix)
 		memFree(path);
 	}
 }
+#if 0 // not using
 char *makeTempFile(char *suffix)
 {
 	char *out = makeTempPath(suffix);
@@ -194,6 +195,7 @@ char *makeTempDir(char *suffix)
 	createDir(out);
 	return out;
 }
+#endif
 
 static uint64 NowTick(void)
 {

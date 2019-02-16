@@ -41,8 +41,10 @@ char *getSelfDir(void);
 
 char *getTempRtDir(void);
 char *makeTempPath(char *suffix = ".wrk");
+#if 0 // not using
 char *makeTempFile(char *suffix = ".tmp");
 char *makeTempDir(char *suffix = "");
+#endif
 
 time_t now(void);
 char *getTimeStamp(time_t t = 0);

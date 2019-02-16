@@ -16,8 +16,10 @@ void addCwd(char *dir);
 void addCwd_x(char *dir);
 void unaddCwd(void);
 
+#if 0 // not using
 void createFile(char *file);
 void createDir(char *dir);
+#endif
 
 void removeFile(char *file);
 void removeDir(char *dir);
