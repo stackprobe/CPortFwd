@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalProcMtx.cs" />
+    <Compile Include="SaveLoadDialogs.cs" />
     <Compile Include="XNode.cs" />
     <Compile Include="何かを待つWin.cs">
       <SubType>Form</SubType>

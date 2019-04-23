@@ -195,68 +195,34 @@ namespace WCPortFwd
 		{
 			try
 			{
-				// ---- open dlg ----
+				string file = SaveLoadDialogs.LoadFile(
+					"開くファイルを選択してください",
+					"鍵:rawkey",
+					Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+					"*.rawkey"
+					);
 
-				//OpenFileDialogクラスのインスタンスを作成
-				using (OpenFileDialog ofd = new OpenFileDialog())
+				if (file != null)
 				{
-					//はじめのファイル名を指定する
-					//はじめに「ファイル名」で表示される文字列を指定する
-					//ofd.FileName = "default.html";
-					ofd.FileName = "*.rawkey";
-					//はじめに表示されるフォルダを指定する
-					//指定しない（空の文字列）の時は、現在のディレクトリが表示される
-					//ofd.InitialDirectory = @"C:\";
-					ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-					//[ファイルの種類]に表示される選択肢を指定する
-					//指定しないとすべてのファイルが表示される
-					ofd.Filter =
-						//"HTMLファイル(*.html;*.htm)|*.html;*.htm|すべてのファイル(*.*)|*.*";
-						"鍵ファイル(*.rawkey)|*.rawkey|すべてのファイル(*.*)|*.*";
-					//[ファイルの種類]ではじめに
-					//「すべてのファイル」が選択されているようにする
-					//ofd.FilterIndex = 2;
-					ofd.FilterIndex = 1;
-					//タイトルを設定する
-					ofd.Title = "開くファイルを選択してください";
-					//ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
-					ofd.RestoreDirectory = true;
-					//存在しないファイルの名前が指定されたとき警告を表示する
-					//デフォルトでTrueなので指定する必要はない
-					ofd.CheckFileExists = true;
-					//存在しないパスが指定されたとき警告を表示する
-					//デフォルトでTrueなので指定する必要はない
-					ofd.CheckPathExists = true;
+					XNode root = XNode.Load(file);
+					string rawKey = root.GetChild("CPortFwd").GetChild("RawKey").Text;
+					string rawKeyCheckSum = Tools.GetCheckSum(rawKey);
+					string read_rawKeyCheckSum = root.GetChild("CPortFwd").GetChild("RawKey-SUM").Text;
 
-					//ダイアログを表示する
-					if (ofd.ShowDialog() == DialogResult.OK) // using ofd
+					if (read_rawKeyCheckSum != rawKeyCheckSum)
 					{
-						//OKボタンがクリックされたとき
-						//選択されたファイル名を表示する
-						//Console.WriteLine(ofd.FileName);
-
-						XNode root = XNode.Load(ofd.FileName);
-						string rawKey = root.GetChild("CPortFwd").GetChild("RawKey").Text;
-						string rawKeyCheckSum = Tools.GetCheckSum(rawKey);
-						string read_rawKeyCheckSum = root.GetChild("CPortFwd").GetChild("RawKey-SUM").Text;
-
-						if (read_rawKeyCheckSum != rawKeyCheckSum)
-						{
-							throw new Exception("【チェックサムが一致しません】");
-						}
-						rawKey = Tools.PassphraseFltr(rawKey);
-						this.RawKey.Text = rawKey;
-
-						MessageBox.Show(
-							"[鍵またはパスフレーズ]を読み込みました。",
-							"確認",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Information
-							);
+						throw new Exception("【チェックサムが一致しません】");
 					}
-				}
+					rawKey = Tools.PassphraseFltr(rawKey);
+					this.RawKey.Text = rawKey;
 
-				// ----
+					MessageBox.Show(
+						"[鍵またはパスフレーズ]を読み込みました。",
+						"確認",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information
+						);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -281,68 +247,38 @@ namespace WCPortFwd
 				}
 				string rawKeyCheckSum = Tools.GetCheckSum(rawKey);
 
-				// ---- save dlg ----
+				string file = SaveLoadDialogs.SaveFile(
+					"保存先のファイルを選択してください",
+					"鍵:rawkey",
+					Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+					"CPortFwd_KeyOrPass_" + Tools.GetCompactStamp(DateTime.Now) + ".rawkey"
+					);
 
-				//SaveFileDialogクラスのインスタンスを作成
-				using (SaveFileDialog sfd = new SaveFileDialog())
+				if (file != null)
 				{
-					//はじめのファイル名を指定する
-					sfd.FileName = "CPortFwd_KeyOrPass_" + Tools.GetCompactStamp(DateTime.Now) + ".rawkey";
-					//はじめに表示されるフォルダを指定する
-					//sfd.InitialDirectory = @"C:\";
-					sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-					//[ファイルの種類]に表示される選択肢を指定する
-					sfd.Filter =
-						//"HTMLファイル(*.html;*.htm)|*.html;*.htm|すべてのファイル(*.*)|*.*";
-						"鍵ファイル(*.rawkey)|*.rawkey|すべてのファイル(*.*)|*.*";
-					//[ファイルの種類]ではじめに
-					//「すべてのファイル」が選択されているようにする
-					//sfd.FilterIndex = 2;
-					sfd.FilterIndex = 1;
-					//タイトルを設定する
-					sfd.Title = "保存先のファイルを選択してください";
-					//ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
-					sfd.RestoreDirectory = true;
-					//既に存在するファイル名を指定したとき警告する
-					//デフォルトでTrueなので指定する必要はない
-					sfd.OverwritePrompt = true;
-					//存在しないパスが指定されたとき警告を表示する
-					//デフォルトでTrueなので指定する必要はない
-					sfd.CheckPathExists = true;
+					List<string> lines = new List<string>();
 
-					//ダイアログを表示する
-					if (sfd.ShowDialog() == DialogResult.OK) // using sfd
-					{
-						//OKボタンがクリックされたとき
-						//選択されたファイル名を表示する
-						//Console.WriteLine(sfd.FileName);
+					lines.Add("<?xml version=\"1.0\" encoding=\"Shift_JIS\"?>");
+					lines.Add("<Root>");
+					lines.Add("<CPortFwd>");
+					lines.Add("<RawKey>");
+					lines.Add(rawKey);
+					lines.Add("</RawKey>");
+					lines.Add("<RawKey-SUM>");
+					lines.Add(rawKeyCheckSum);
+					lines.Add("</RawKey-SUM>");
+					lines.Add("</CPortFwd>");
+					lines.Add("</Root>");
 
-						List<string> lines = new List<string>();
+					File.WriteAllLines(file, lines, Encoding.GetEncoding(932));
 
-						lines.Add("<?xml version=\"1.0\" encoding=\"Shift_JIS\"?>");
-						lines.Add("<Root>");
-						lines.Add("<CPortFwd>");
-						lines.Add("<RawKey>");
-						lines.Add(rawKey);
-						lines.Add("</RawKey>");
-						lines.Add("<RawKey-SUM>");
-						lines.Add(rawKeyCheckSum);
-						lines.Add("</RawKey-SUM>");
-						lines.Add("</CPortFwd>");
-						lines.Add("</Root>");
-
-						File.WriteAllLines(sfd.FileName, lines, Encoding.GetEncoding(932));
-
-						MessageBox.Show(
-							"[鍵またはパスフレーズ]を保存しました。",
-							"確認",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Information
-							);
-					}
+					MessageBox.Show(
+						"[鍵またはパスフレーズ]を保存しました。",
+						"確認",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information
+						);
 				}
-
-				// ----
 			}
 			catch (Exception ex)
 			{
