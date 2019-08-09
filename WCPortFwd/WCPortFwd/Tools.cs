@@ -96,7 +96,7 @@ namespace WCPortFwd
 		}
 	}
 
-	public class Tools
+	public static class Tools
 	{
 		public static void DoubleBufferOn(Control ctrl)
 		{
@@ -253,7 +253,7 @@ namespace WCPortFwd
 		}
 	}
 
-	public class EventSet
+	public static class EventSet
 	{
 		[DllImport("kernel32.dll")]
 		private static extern IntPtr CreateEvent(IntPtr lpEventAttributes, bool bManualReset, bool bInitialState, string lpName);
