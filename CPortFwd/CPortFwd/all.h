@@ -7,7 +7,6 @@
 #include "File.h"
 #include "FileStream.h"
 #include "Tools.h"
-#include "Kernel.h"
 #include "Socket.h"
 #include "SockServer.h"
 #include "Mutex.h"

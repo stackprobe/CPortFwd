@@ -85,7 +85,6 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileList.cpp" />
     <ClCompile Include="FileStream.cpp" />
-    <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Mutex.cpp" />
     <ClCompile Include="sha512.cpp" />
@@ -108,7 +107,6 @@
     <ClInclude Include="File.h" />
     <ClInclude Include="FileList.h" />
     <ClInclude Include="FileStream.h" />
-    <ClInclude Include="Kernel.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MemAlloc.h" />
     <ClInclude Include="Mutex.h" />
