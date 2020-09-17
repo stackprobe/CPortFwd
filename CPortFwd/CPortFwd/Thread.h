@@ -4,7 +4,7 @@
 #define thread_tls \
 	__declspec(thread)
 
-int runThread(void (*userFunc)(void *), void *userInfo);
+int runThread(void (*userFunc)(uint), uint userInfo);
 
 typedef struct critical_st
 {

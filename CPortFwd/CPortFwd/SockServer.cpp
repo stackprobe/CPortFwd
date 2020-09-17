@@ -202,7 +202,7 @@ static void PrintChannelStatus(autoList<uchar> *recvBuffer, autoList<uchar> *sen
 	}
 #endif
 }
-static void ChannelTh(void *vi)
+static void ChannelTh(uint vi)
 {
 	ChannelInfo_t *i = (ChannelInfo_t *)vi;
 
@@ -538,8 +538,8 @@ static void ConnectTh(int sock)
 		decChannel->DecMode = 1;
 
 startChannels:
-		int encChTh = runThread(ChannelTh, encChannel);
-		int decChTh = runThread(ChannelTh, decChannel);
+		int encChTh = runThread(ChannelTh, (uint)encChannel);
+		int decChTh = runThread(ChannelTh, (uint)decChannel);
 
 		uncritical();
 		{
@@ -646,7 +646,7 @@ void SockServer(int recvPortNo, int fwrdPortNo, char *fwrdDomain, int connectMax
 					int clSock = accept(sock, (struct sockaddr *)&clsa, &sasz);
 					errorCase(clSock == -1); // ? Ž¸”s
 
-					int th = runThread((void (*)(void *))ConnectTh, (void *)clSock);
+					int th = runThread((void (*)(uint))ConnectTh, (uint)clSock);
 					ConnectThList->AddElement(th);
 				}
 			}

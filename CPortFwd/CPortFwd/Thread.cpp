@@ -2,8 +2,8 @@
 
 typedef struct Info_st
 {
-	void (*UserFunc)(void *);
-	void *UserInfo;
+	void (*UserFunc)(uint);
+	uint UserInfo;
 }
 Info_t;
 
@@ -31,7 +31,7 @@ static uint __stdcall Perform(void *info)
 		}
 		uncritical();
 */
-int runThread(void (*userFunc)(void *), void *userInfo)
+int runThread(void (*userFunc)(uint), uint userInfo)
 {
 	errorCase(!userFunc);
 
