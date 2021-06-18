@@ -7,7 +7,7 @@
 ビルド済み配布物
 ----------------
 
-http://stackprobe.dip.jp/CPortFwd
+http://stackprobe.ccsp.mydns.jp/CPortFwd
 
 
 マニュアル
