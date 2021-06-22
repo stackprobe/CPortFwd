@@ -15,3 +15,9 @@ http://stackprobe.ccsp.mydns.jp/CPortFwd
 
 https://github.com/stackprobe/CPortFwd/blob/master/doc/Readme.txt
 
+
+====
+
+2021.6.22
+CPortFwd.exe の暗号化の実装に問題があったため crypTunnel.exe を使用するように WCPortFwd.exe を修正した。
+https://github.com/soleil-taruto/wb2/tree/main/t20210622_WCPortFwd
